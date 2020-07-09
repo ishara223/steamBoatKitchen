@@ -1,0 +1,74 @@
+<!-- <p>menu-dashboard works!</p> -->
+<div class="container">
+    <div class="row" style="padding: 10px;">
+        <div class="col-md-9" style="text-align: center;">
+            <h1><strong>{{title}}</strong></h1>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-primary" (click)="viewMenuOrAddMenuShow()">{{buttonText}}</button>
+        </div>
+    </div>
+    <div class="row" *ngIf="add" >
+        <div class="col-md-6">
+           <div>
+                <div *ngIf="uploadResponse && uploadResponse.status === 'error'" class="error">
+                    <p>{{uploadResponse.message}}</p>
+                </div>
+                <div *ngIf="uploadResponse && uploadResponse.status === 'success'" class="success">
+                <!-- <img [src]='uploadResponse.url' style="width:100px;height:auto" /> -->
+                    <p>{{uploadResponse.message}}</p>
+                </div>
+            
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <label for="menuName">Menu Name</label>
+                        <input type="text" class="form-control" formControlName="menuName" id="menuName" placeholder="Enter menu Name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="menuDiscription">Menu Discription</label>
+                        <input type="text" class="form-control" formControlName="menuDiscription" id="menuDiscription"  placeholder="Enter Menu Discription">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="carouslImag">Menu Image</label><br>
+                        <input type="file" id="menuImage" name="avatar" (change)="onFileSelect($event)" />
+                    </div>   
+                      
+                    <button class="btn btn-primary" type="submit">Upload</button>
+                </form>
+            </div> 
+        </div>
+        <div class="col-md-6">
+            
+        </div>
+    </div>
+    <div class="row" *ngIf="view" >
+        <div class="col-md-12">
+            <div class="">
+                <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <!-- <th scope="col"></th> -->
+                        <th scope="col">Menu Name</th>
+                        <th scope="col">Discription</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let mennu of mennu">
+                        <!-- <th scope="row">1</th> -->
+                        <td>{{mennu.mName}}</td>
+                        <td>{{mennu.mDiscription}}</td>
+                        <td><img src="{{PHP_API_SERVER}}/api/{{mennu.mImg}}" style="width: 100px;height: auto;"></td>
+                        <td>{{mennu.status}}</td>
+                        <td><button class="btn btn-danger" (click) = "deleteMenu(mennu.mId)">Delete</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<p>admin works!</p>
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches" >
+    <mat-toolbar color="primary" class="example-toolbar">
+      <button mat-icon-button (click)="snav.toggle()"><i class="fa fa-bars" aria-hidden="true"></i></button>
+      <h1 class="example-app-name">Steam Boat Kitchen</h1>
+      <button type="button" class="btn btn-block" (click)="logout()" style="width: auto;position: absolute;right: 10px; color: aliceblue;">logout</button>
+    </mat-toolbar>
+  
+    <mat-sidenav-container class="example-sidenav-container"
+                           [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+      <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+                   [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+        <mat-nav-list>
+            <mat-selection-list style="width: 300px;" >
+                <mat-list-item >Dashboard</mat-list-item>
+                <mat-list-item (click)="menuDashboardView()">Menu</mat-list-item>
+                <mat-list-item (click)="producrDashboardView()">Products</mat-list-item>
+                <mat-list-item (click)="carouslDashboardView()">Carousl</mat-list-item>
+                <mat-list-item (click)="ordersDashboardView()">Orders</mat-list-item>
+                <!-- <mat-list-item >Special Deals</mat-list-item>
+                <mat-list-item >Contact</mat-list-item> -->
+                <mat-list-item style="bottom: 0em;"><a routerLink="/registration">Register A User</a></mat-list-item>
+            </mat-selection-list>
+        </mat-nav-list>
+      </mat-sidenav>
+  
+      <mat-sidenav-content>
+        <div *ngIf="menu">
+            <app-menu-dashboard ></app-menu-dashboard>
+        </div> 
+        <div *ngIf="product">
+            <app-producd-dash-board></app-producd-dash-board>
+        </div>
+        <div *ngIf="carousl">
+            <app-dash-board></app-dash-board>
+        </div> 
+        <div *ngIf="orders">
+          <app-orders></app-orders>
+      </div> 
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

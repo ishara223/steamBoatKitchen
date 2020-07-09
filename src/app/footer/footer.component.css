@@ -1,0 +1,6 @@
+.fixedBottem{
+    position: fixed;
+    /* left: 7%; */
+    bottom: 0;
+    width: 100%;
+}

@@ -1,0 +1,210 @@
+<app-nav-bar></app-nav-bar>
+<div class="container" style="min-height: 75% !important;">
+   
+  <button mat-raised-button (click)="openBottomSheet()">Open file</button>   
+
+    <div class="row">
+        <mat-accordion class="example-headers-align" style="width:100%">
+            <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Confirm Items
+                </mat-panel-title>
+                <mat-panel-description>
+                  Confirm Your Items
+                  <!-- <mat-icon>account_circle</mat-icon> -->
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+                <div class="col-md-12">
+                <h2>cart</h2>
+                <table class="table">
+                    <!-- <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                    </thead> -->
+                    <tbody>
+                        <tr *ngFor="let cart of dataService.cart">
+                            <td>{{cart.product.pName}}</td>
+                            <td>
+                                <button class="btn btn-primary"(click)="plusOne(cart)">+</button>
+                                {{cart.quentity}}  
+                                <button class="btn btn-primary"(click)="minasOne(cart)">-</button>
+                            </td>
+                            <td> X </td>
+                            <td>${{cart.price}}</td>
+                            <td>
+                                <button class="btn btn-primary" (click)= "removeFromCart(cart)">Remove</button>
+                            </td>   
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                        <th scope="col">Total</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col">${{dataService.total}}</th>
+                        <th scope="col"></th>
+                        </tr>
+                    </thead> 
+                </table>
+                <!-- <button class="btn btn-primary" >Check Out</button> -->
+                </div>
+              <!-- <mat-form-field>
+                <mat-label>First name</mat-label>
+                <input matInput>
+              </mat-form-field>
+          
+              <mat-form-field>
+                <mat-label>Age</mat-label>
+                <input matInput type="number" min="1">
+              </mat-form-field>-->
+              <mat-action-row> 
+
+                <button mat-button color="primary" (click)="nextStep()">Next</button>
+              </mat-action-row>
+            </mat-expansion-panel>
+          
+            <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Customer Details
+                </mat-panel-title>
+                <mat-panel-description>
+                  Enter Your Details
+                  <!-- <mat-icon>map</mat-icon> -->
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+                <form novalidate (ngSubmit)="buy()" [formGroup]="stripeTest">
+                    <mat-form-field appearance="fill" style="">
+                        <mat-label>Name</mat-label>
+                        <input matInput placeholder="Enter your name"  formControlName="name" quired>
+                    </mat-form-field>
+        
+                    <mat-form-field appearance="fill" style="">
+                        <mat-label>Enter your email</mat-label>
+                        <input matInput placeholder="pat@example.com"  formControlName="email"required>
+                        <mat-error *ngIf="stripeTest.invalid">{{getErrorMessage()}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" style="">
+                        <mat-label>Phone Number</mat-label>
+                        <input matInput placeholder="Enter your phone number"  formControlName="phoneNumber" quired>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" style="">
+                        <mat-label>Adress Line One</mat-label>
+                        <input matInput placeholder="Enter your adress line one"  formControlName="adressLineOne" quired>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" style="">
+                        <mat-label>Adress Line Two</mat-label>
+                        <input matInput placeholder="Enter your adress line two"  formControlName="adressLineTwo" >
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" style="">
+                        <mat-label>City</mat-label>
+                        <input matInput placeholder="Enter your city"  formControlName="city" quired>
+                    </mat-form-field>
+                </form>
+              
+          
+              <mat-action-row>
+                <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                <button mat-button color="primary" (click)="nextStep()">Next</button>
+              </mat-action-row>
+            </mat-expansion-panel>
+          
+            <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Delivery & Payment
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    Select Delivery And Payment Type
+                    <!-- <mat-icon>map</mat-icon> -->
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                    <div class="row">
+                        <div class="col-md-12" style="padding: 25px;">
+                           <p>How would you like to recive food</p>
+                            <mat-radio-group aria-label="Select an option" [(ngModel)]= "orderDetails.foodReciveType">
+                                <mat-radio-button value="Pick up">Pick up</mat-radio-button>
+                                <mat-radio-button value="Delivery">Delivery</mat-radio-button>
+                            </mat-radio-group> 
+                        </div>
+                        <div class="col-md-12" style="padding: 25px;">
+                           <p>How would you like pay</p>
+                            <mat-radio-group aria-label="Select an option" [(ngModel)] = "orderDetails.paymentType">
+                                <mat-radio-button value="Pay at store" >Pay at store</mat-radio-button>
+                                <mat-radio-button value="Card payment">Card payment</mat-radio-button>
+                                <mat-radio-button value="2" disabled="true" >Google play</mat-radio-button>
+                            </mat-radio-group> 
+                        </div> 
+                    </div>
+                    <div class="row">
+                        
+                    </div>
+
+                <mat-action-row>
+                    <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                    <button mat-button color="primary" (click)="setValuesToOrderDetails()">Next</button>
+                </mat-action-row>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Cnfirm
+                </mat-panel-title>
+                <mat-panel-description>
+                  confirm Your Order
+                  <!-- <mat-icon>date_range</mat-icon> -->
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+          
+              <!-- <mat-form-field>
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="picker" (focus)="picker.open()" readonly>
+              </mat-form-field>
+              <mat-datepicker #picker></mat-datepicker> -->
+                <div [hidden]="!cardPayment">
+                    <form novalidate (ngSubmit)="buy()" [formGroup]="stripeTest" >
+                    <!-- <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Name</mat-label>
+                        <input matInput placeholder="Enter your name"  formControlName="name" quired>
+                    </mat-form-field>
+        
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Enter your email</mat-label>
+                        <input matInput placeholder="pat@example.com"  formControlName="email"required>
+                        <mat-error *ngIf="stripeTest.invalid">{{getErrorMessage()}}</mat-error>
+                    </mat-form-field> -->
+        
+                    
+                        <!-- <input type="text" formControlName="name" placeholder="Jane Doe"> -->
+                        <div id="card-element" class="field"></div>
+                        <button type="submit" class="btn btn-success">
+                        BUY
+                        </button>
+                    </form>
+                </div>
+                
+                <button class="btn btn-success" *ngIf="payAtAtore" (click)="payAtStore()">
+                    Place Order
+                </button>
+              <mat-action-row>
+                <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                <!-- <button mat-button color="primary" (click)="nextStep()">End</button> -->
+              </mat-action-row>
+            </mat-expansion-panel>
+          
+          </mat-accordion>
+          
+    </div>
+</div>
+<app-footer></app-footer>

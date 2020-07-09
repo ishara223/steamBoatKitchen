@@ -1,0 +1,70 @@
+
+<div class="container">
+    <div class="row" style="padding: 10px;">
+        <div class="col-md-9" style="text-align: center;">
+            <h1><strong>{{title}}</strong></h1>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-primary" (click)="viewOrAddCarouslShow()">{{buttonText}}</button>
+        </div>
+    </div>
+    <div class="row" *ngIf="add" >
+        <div class="col-md-6">
+           <div>
+                <div *ngIf="uploadResponse && uploadResponse.status === 'error'" class="error">
+                    <p>{{uploadResponse.message}}</p>
+                </div>
+                <div *ngIf="uploadResponse && uploadResponse.status === 'success'" class="success">
+                <!-- <img [src]='uploadResponse.url' style="width:100px;height:auto" /> -->
+                    <p>{{uploadResponse.message}}</p>
+                </div>
+            
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <label for="carouslTitle">Carousl Title</label>
+                        <input type="text" class="form-control" formControlName="carouslTitle" id="carouslTitle" placeholder="Enter Carousl Title">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="carouslDiscription">Carousl Discription</label>
+                        <input type="text" class="form-control" formControlName="carouslDiscription" id="carouslDiscription"  placeholder="Enter Carousl Discription">
+                    </div>
+                    <div class="form-group">
+                        <label for="carouslImag">Carousl Image</label><br>
+                        <input type="file" id="carouslImage" name="avatar" (change)="onFileSelect($event)" />
+                    </div>     
+                    <button class="btn btn-primary" type="submit">Upload</button>
+                </form>
+            </div> 
+        </div>
+    </div>
+    <div class="row" *ngIf="view">
+        <div class="col-md-12">    
+            <div class="">
+                <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <!-- <th scope="col"></th> -->
+                        <th scope="col">Carousl Title</th>
+                        <th scope="col">Discription</th>
+                        <th scope="col">Image</th>
+                        <!-- <th scope="col">Status</th> -->
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let carousl of carousl">
+                        <!-- <th scope="row">1</th> -->
+                        <td>{{carousl.cName}}</td>
+                        <td>{{carousl.cDiscription}}</td>
+                        <td><img src="{{PHP_API_SERVER}}/api/{{carousl.CImg}}" style="width: 300px;height: auto;"></td>
+                        <!-- <td>{{carousl.status}}</td> -->
+                        <td><button class="btn btn-danger" (click)="deleteCarousl(carousl.cId)">Delete</button></td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

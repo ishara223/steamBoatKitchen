@@ -1,0 +1,82 @@
+<app-nav-bar></app-nav-bar>
+<div class="container" style="margin-top: 30px;margin-bottom: 30px;">
+    <div class="row">
+        <div class="col-md-6 col-sm-12 my-auto">
+          <agm-map [latitude]="lat" [longitude]="lng">
+            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+          </agm-map>
+          <!-- <mdb-card style="height: 100%;"> -->
+            <!-- <mdb-card-body class="px-lg-5 pt-0"-->
+              <!-- <google-map
+                height="500px"
+                width="100%"
+                
+                >
+                <map-marker
+                  *ngFor="let marker of markers"
+                  [position]="marker.position"
+                  [label]="marker.label"
+                  [title]="marker.title"
+                  [options]="marker.options"
+                >
+                </map-marker>
+              </google-map> -->
+              <!-- Form 
+            </mdb-card-body>-->
+          <!-- </mdb-card> -->
+          <!-- <agm-map [latitude]="map.lat" [longitude]="map.lng" style="height: 300px">
+            <agm-marker [latitude]="map.lat" [longitude]="map.lng"></agm-marker>
+          </agm-map> -->
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <mdb-card>
+            <mdb-card-body class="px-lg-5 pt-0">
+              <!-- Form -->
+              <form [formGroup]="contactUsForm" ng-submit="submitMedicineInfo()" class="text-center" style="color: #757575;">
+                <!-- Name -->
+                <div class="md-form mt-3">
+                  <input formControlName="name" type="text" id="materialContactFormName" class="form-control" mdbInput>
+                  <label for="materialContactFormName">Name</label>
+                </div>
+                <!-- E-mail -->
+                <div class="md-form">
+                  <input formControlName="eMail" type="email" id="materialContactFormEmail" class="form-control" mdbInput>
+                  <label for="materialContactFormEmail">E-mail</label>
+                </div>
+                <div class="md-form mt-3">
+                  <input formControlName="contactNumber" type="text" id="materialContactFormcontactNumber" class="form-control" mdbInput>
+                  <label for="materialContactForcontactNumber">Contact Number</label>
+                </div>
+                <!-- Subject -->
+                <span>Subject</span>
+                <div class="row">
+                  <div class="col-md-12 mx-auto">
+                    <select  formControlName="orderType" class="browser-default custom-select mb-4">
+                      <option value="1" selected>Take Out</option>
+                      <option value="2">Catering</option>
+                    </select>
+                  </div>
+                </div>
+                <!--Message-->
+                <div class="md-form">
+                  <textarea formControlName="massage" type="text" id="materialContactFormMessage" class="form-control md-textarea" mdbInput></textarea>
+                  <label for="materialContactFormMessage">Message</label>
+                </div>
+                <!-- Copy -->
+                <!-- <div class="row">
+                  <div class="col-md-6 mx-auto d-flex justify-content-center">
+                    <mdb-checkbox>Send me a copy of this message</mdb-checkbox>
+                  </div>
+                </div> -->
+                <!-- Send button -->
+                <!-- <button mdbBtn color="info" outline="true" rounded="true" block="true" class="z-depth-0 my-4 waves-effect" mdbWavesEffect
+                  type="submit">Send</button> -->
+                  <button (click)="submitMedicineInfo()" mdbBtn type="button" color="default" rounded="true" mdbWavesEffect type="submit">Send</button>
+              </form>
+              <!-- Form -->
+            </mdb-card-body>
+          </mdb-card>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,72 @@
+<div class="container">
+    <div class="row" style="padding-top: 10PX;padding-bottom: 10PX;">
+        <div class="col-md-4 text-center">
+            <button class="btn btn-success " (click)="getOrder('Recived')" style="margin: 5px;">Recived Orders</button>
+        </div>
+        <div class="col-md-4 text-center">
+            <button class="btn btn-success " (click)="getOrder('Done')" style="margin: 5px;">Done Orders</button>
+        </div>
+        <div class="col-md-4 text-center">
+            <button class="btn btn-success " (click)="getOrder('Cancelled')" style="margin: 5px;">Canccelled Orders</button>
+        </div>
+    </div>
+    <div class="row">
+        <div  class="col-md-12" >
+            <mat-card *ngFor="let getorderDetails of getorderDetails" style="margin-bottom: 10px;">
+                <mat-card-header class="row">
+                    <div class="columnTwo">
+                       <mat-card-title>$.{{getorderDetails.price}}</mat-card-title>
+                        <mat-card-subtitle>{{getorderDetails.date}}</mat-card-subtitle> 
+                    </div>
+                    <div class="columnOne">
+                        <h3 ><strong>Order ID :</strong>{{getorderDetails.orId}}</h3>
+                    </div>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>{{getorderDetails.cusromerName}}</p>
+                                <p>{{getorderDetails.email}}</p>
+                                <h2>{{getorderDetails.phone}}</h2> 
+                                <div style="padding: 5px;background-color: lightgray;border-radius: 0.1rem;">
+                                    <p>{{getorderDetails.adressLineOne}}</p>
+                                    <p>{{getorderDetails.aderessLineTwo}}</p>
+                                    <p>{{getorderDetails.city}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <!-- <mat-card *ngFor="let product of getorderDetails.product">
+                                    <p>{{product.pName}}</p>
+                                </mat-card> -->
+                                <table class="table">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Quentity</th>
+                                            <th scope="col">Unit Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let product of getorderDetails.product">
+                                            <td>{{product.pName}}</td>
+                                            <td>{{product.quenatity}}</td>
+                                            <td>${{product.price}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p><strong>Payment Type : </strong>{{getorderDetails.paymentType}}</p>
+                                <p><strong>Food Recive Method : </strong>{{getorderDetails.foodReciveType}}</p>
+                            </div>
+                        </div>
+                    </div>    
+                </mat-card-content> 
+                <mat-card-actions *ngIf="orderStatus == 'Recived'">
+                    <button mat-button color="warn" (click)="editOrderStatus(getorderDetails.orId,'Cancel',getorderDetails.status)">Cancel</button>
+                    <button mat-button color="primary"(click)="editOrderStatus(getorderDetails.orId,'Done',getorderDetails.status)">Done</button>
+                </mat-card-actions>    
+            </mat-card>
+        </div>
+    </div>
+</div>
+

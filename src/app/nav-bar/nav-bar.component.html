@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+      <img src="./assets/img/steamBoatIcon.png" width="60" height="60" class="d-inline-block align-top" alt="">
+  </a>
+  <a class="navbar-brand" href="#">STEAM BOAT KITCHEN</a>
+  <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNav = true">
+    <i class="fa fa-bars" aria-hidden="true"></i>
+  </button> -->
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item ">
+        <a class="nav-link" routerLink="/Home" routerLinkActive="active">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/menu" routerLinkActive="active">Menu</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/Service" routerLinkActive="active">Service</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/AboutUs" routerLinkActive="active">About Us</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/ContactUs" routerLinkActive="active">Contact Us</a>
+      </li>
+    </ul>
+  </div>
+  <button mat-mini-fab color="primary" (click)="cartPageOpen()"
+      matBadge="{{dataService.cart.length}}" matBadgePosition="before" matBadgeColor="accent">
+      <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+  </button>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNav = true">
+    <i class="fa fa-bars" aria-hidden="true"></i>
+  </button>
+</nav><!--1) Home
+  2) Menu
+  3) Service
+  4) About Us
+  5) Contact Us  -->
+
+  <div class="list-group" *ngIf="toggleNav" (click)="toggleNav = false">
+    <a class="list-group-item list-group-item-action list-group-item-light" (click)="toggleNav = false" routerLink="/Home" routerLinkActive="active" (click)="toggleNav = false">Home</a>
+    <a class="list-group-item list-group-item-action list-group-item-light" routerLink="/menu" routerLinkActive="active" (click)="toggleNav = false">Menu</a>
+    <a class="list-group-item list-group-item-action list-group-item-light" routerLink="/Service" routerLinkActive="active" (click)="toggleNav = false">Service</a>
+    <a class="list-group-item list-group-item-action list-group-item-light" routerLink="/AboutUs" routerLinkActive="active" (click)="toggleNav = false">About Us</a>
+    <a class="list-group-item list-group-item-action list-group-item-light" routerLink="/ContactUs" routerLinkActive="active" (click)="toggleNav = false">Contact Us</a>
+  </div>

@@ -1,0 +1,17 @@
+<div class="row" style="display: flex;justify-content: center;width: 100%;margin-top: 50px!important;">
+    <h1><strong>Special Deals</strong></h1>
+</div>
+<div class="container mt-2" style="margin-bottom: 50px;margin-top: 50px!important;">
+  <div class="row">
+    <div class="col-md-3 col-sm-6 item text-center" *ngFor="let specialDeals of specialDeals">
+      <div class="card item-card card-block" style="padding:5px;border-radius: .5rem;border: 1px solid#ec7710;background-color:whitesmoke;">
+        <h4 class="card-title text-center"><strong>{{specialDeals.sdName}}</strong></h4>
+        <img src="http://steamboatkitchen.com/demo/api/img/{{specialDeals.sdImg}}"  alt="{{specialDeals.sdImg}}" style="border-radius: .5rem;">
+        <h5 class="item-card-title mt-3 mb-3"></h5>
+        <p class="card-text">{{specialDeals.sdDescription}}</p> 
+      </div>
+    </div>
+  </div>
+</div>
+  
+

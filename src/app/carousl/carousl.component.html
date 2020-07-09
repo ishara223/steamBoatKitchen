@@ -1,0 +1,14 @@
+<div class=''>  
+    <div class=''>  
+        <ngb-carousel >  
+            <ng-template ngbSlide *ngFor="let caoursl of carousl">  
+                <img @carouselAnimation src="http://steamboatkitchen.com/demo/api/{{caoursl.CImg}}" alt="">  
+                <div class="carousel-caption">  
+                    <h1 style="color: yellow">{{caoursl.cName}}</h1>
+                    <p>{{caoursl.cDiscription}}</p>  
+                </div>   
+            </ng-template>  
+        </ngb-carousel>  
+    </div>  
+  
+</div>  
