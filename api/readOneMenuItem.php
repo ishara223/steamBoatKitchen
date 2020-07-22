@@ -37,6 +37,6 @@
     echo json_encode($connection);
     }
 
-  
+    mysqli_close($connection);
     //echo json_encode($postdata);
 ?>

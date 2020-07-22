@@ -43,6 +43,8 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { CartComponent } from './cart/cart.component';
 import { NgxStripeModule } from 'ngx-stripe';
 import { OrdersComponent } from './orders/orders.component';
+import { UsermassageComponent } from './usermassage/usermassage.component';
+//import { OwlModule } from 'ngx-owl-carousel';
 
 
 @NgModule({
@@ -68,7 +70,8 @@ import { OrdersComponent } from './orders/orders.component';
     AdminHomeComponent,
     CartComponent,
     OrdersComponent,
-    
+    UsermassageComponent,
+
     //MenuComponent,
     //ServiceComponent
   ],
@@ -85,14 +88,14 @@ import { OrdersComponent } from './orders/orders.component';
     MatSnackBarModule,
     MatSidenavModule,
     materialModule,
-    
+
     //FlexLayoutModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBmgT415qD1eSEYFCXGnFtq0UH6iof8F3c'
     }),
     NgxStripeModule.forRoot('pk_test_51GzKsMLQE6y0pUWQgSwok1Vm65OACUwr7gUDMb8kaWAtGwqEEOdY2G8Upvv9rHika37DxGM7mLDzYNq3jw3jtxch00t7vUhuV2'),
 
-    
+
   ],
   entryComponents: [
     MenuDashboardComponent

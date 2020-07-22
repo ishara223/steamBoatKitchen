@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,Inject } from '@angular/core';
 import {DataService}from '../data.service';
 import { reduce } from  'rxjs/operators';
 import { Observable } from  'rxjs';
@@ -9,9 +9,9 @@ import { orderDetails } from  '../objects';
 import {formatDate} from '@angular/common';
 import { DatePipe } from '@angular/common';
 import {Router} from '@angular/router';
-import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
+import {MatBottomSheet, MatBottomSheetRef,MAT_BOTTOM_SHEET_DATA} from '@angular/material/bottom-sheet';
 
-   
+
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -24,8 +24,10 @@ export class CartComponent implements OnInit {
 
   cardPayment:boolean;
   payAtAtore:boolean;
+  response:any;
+  error:boolean;
 
-  orderDetails:  orderDetails  = { 
+  orderDetails:  orderDetails  = {
     token :  null ,
     price:null,
     customerName:null,
@@ -43,12 +45,12 @@ export class CartComponent implements OnInit {
   //
   elements: Elements;
   card: StripeElement;
- 
+
   // optional parameters
   elementsOptions: ElementsOptions = {
     locale: 'es'
   };
- 
+
   stripeTest: FormGroup;
   //
 
@@ -82,12 +84,16 @@ export class CartComponent implements OnInit {
   handler:any = null;
 
   ngOnInit(): void {
+    if(this.dataService.total == 0){
+      this.router.navigate(['/menu']);
+    }else
     //this.cart = this.dataService.cart;
     //     let total = [0, 1, 2, 3].reduce((accumulator, currentValue) => accumulator + currentValue);
     // console.log(total);
     this.cardPayment = false;
     this.payAtAtore = false;
     this.loadStripe();
+    this.dataService.sum();
 
     this.stripeTest = this.fb.group({
       name: new FormControl(this.stripeTest,[Validators.required]),
@@ -161,7 +167,7 @@ export class CartComponent implements OnInit {
     console.log(this.dataService.cart);
   }
 
-  // pay(amount) {    
+  // pay(amount) {
   //   var tokenID;
   //   var handler = (<any>window).StripeCheckout.configure({
   //     key: 'pk_test_lql3oDI8zzPnSPKIUOdpK0xE003c8OY9oZ',
@@ -175,7 +181,7 @@ export class CartComponent implements OnInit {
   //       console.log(tokenID);
   //       alert('Token Created!!');
   //     }
-      
+
   //   });
   //   console.log(tokenID);
   //   handler.open({
@@ -183,13 +189,13 @@ export class CartComponent implements OnInit {
   //     description: '2 widgets',
   //     amount: amount * 100
   //   });
-    
+
   //   console.log(handler);
   //   //return this.token;
   // }
 
   loadStripe() {
-     
+
     if(!window.document.getElementById('stripe-script')) {
       var s = window.document.createElement("script");
       s.id = "stripe-script";
@@ -208,7 +214,7 @@ export class CartComponent implements OnInit {
           }
         });
       }
-       
+
       window.document.body.appendChild(s);
     }
   }
@@ -216,13 +222,14 @@ export class CartComponent implements OnInit {
     this.apiService.cartCheckout(orderDetails).subscribe(
       (res) => {
         //this.uploadResponse = res;
-          console.log(res);
+        this.response = res;
+          console.log(this.response);
         //this.getMenu();
         //this.form = null;
         //alert ('Order placed');
-        this.openBottomSheet();
+        this.openBottomSheet(this.response);
       },
-      (err) => {  
+      (err) => {
         console.log(err);
       }
     );
@@ -236,7 +243,7 @@ export class CartComponent implements OnInit {
       .createToken(this.card, { name })
       .subscribe(result => {
         if (result.token) {
-          let date: Date = new Date();  
+          let date: Date = new Date();
           let time: Date = new Date('h:MM:ss TT');
           console.log("Date = " + date);
           //let dateFormat = require('dateformat');
@@ -259,7 +266,7 @@ export class CartComponent implements OnInit {
           this.orderDetails.time = time;
 
           this.placeOrder(this.orderDetails);
-          //this.token = result.token.id;dateFormat(now, "dd, mm, yyyy, h:MM:ss TT"); 
+          //this.token = result.token.id;dateFormat(now, "dd, mm, yyyy, h:MM:ss TT");
           console.log(result.token.id);
           console.log(result.token);
           console.log(this.orderDetails);
@@ -275,12 +282,12 @@ export class CartComponent implements OnInit {
   getStripeToken() {
     const name = this.stripeTest.get('name').value;
     //const total = this.dataService.total;
-  
+
     this.stripeService
       .createToken(this.card, { name })
       .subscribe(result => {
         if (result.token) {
-          let date: Date = new Date();  
+          let date: Date = new Date();
           let time: Date = new Date('h:MM:ss TT');
           console.log("Date = " + date);
           //let dateFormat = require('dateformat');
@@ -300,23 +307,33 @@ export class CartComponent implements OnInit {
           //console.log(result.token.id);
           console.log(result.token);
           //console.log(this.orderDetails);
-          
+
         } else if (result.error) {
           // Error creating the token
           console.log(result.error.message);
           //return result.error.message;
         }
       });
-    console.log(this.token);  
+    console.log(this.token);
   }
-  
+
 
   setStep(index: number) {
     this.step = index;
   }
 
   nextStep() {
-    this.step++;
+    if(this.step == 1 || this.step == 2){
+      if(this.stripeTest.invalid){
+
+      }else{
+        this.step++;
+      }
+    }
+    else{
+      this.step++;
+    }
+
   }
 
   prevStep() {
@@ -326,7 +343,7 @@ export class CartComponent implements OnInit {
   setValuesToOrderDetails(){
     this.nextStep();
 
-    let date: Date = new Date();  
+    let date: Date = new Date();
     let time: Date = new Date('h:MM:ss TT');
 
     this.orderDetails.customerName          = this.stripeTest.get('name').value;
@@ -350,16 +367,18 @@ export class CartComponent implements OnInit {
       this.payAtAtore = true;
     }
     console.log(this.orderDetails);
-    
+
   }
 
   payAtStore(){
     this.placeOrder(this.orderDetails);
-    this.openBottomSheet();
+    //this.openBottomSheet(this.response);
   }
 
-  openBottomSheet(): void {
-    this._bottomSheet.open(bottomSheet);
+  openBottomSheet(response): void {
+    this._bottomSheet.open(bottomSheet,{
+      data:response
+    });
   }
 }
 
@@ -368,7 +387,7 @@ export class CartComponent implements OnInit {
   templateUrl: 'bottomSheet.html',
 })
 export class bottomSheet {
-  constructor(private _bottomSheetRef: MatBottomSheetRef<bottomSheet>,private router:Router,) {}
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: any,private _bottomSheetRef: MatBottomSheetRef<bottomSheet>,private router:Router,) {}
 
   openLink(): void {
     this._bottomSheetRef.dismiss();

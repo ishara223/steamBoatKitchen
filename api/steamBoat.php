@@ -28,5 +28,5 @@ else
   echo json_encode($connection);
 }
 
-
+mysqli_close($connection);
 ?>

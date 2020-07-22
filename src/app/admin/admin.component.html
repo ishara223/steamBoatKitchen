@@ -17,8 +17,8 @@
                 <mat-list-item (click)="producrDashboardView()">Products</mat-list-item>
                 <mat-list-item (click)="carouslDashboardView()">Carousl</mat-list-item>
                 <mat-list-item (click)="ordersDashboardView()">Orders</mat-list-item>
-                <!-- <mat-list-item >Special Deals</mat-list-item>
-                <mat-list-item >Contact</mat-list-item> -->
+                <mat-list-item (click)="massageDashboardView()">User Massages</mat-list-item>
+                <!--<mat-list-item >Contact</mat-list-item> -->
                 <mat-list-item style="bottom: 0em;"><a routerLink="/registration">Register A User</a></mat-list-item>
             </mat-selection-list>
         </mat-nav-list>
@@ -36,7 +36,11 @@
         </div> 
         <div *ngIf="orders">
           <app-orders></app-orders>
-      </div> 
+        </div> 
+        <div *ngIf="massage">
+            <app-usermassage></app-usermassage>
+        </div>
       </mat-sidenav-content>
     </mat-sidenav-container>
 </div>
+this.massage = false;

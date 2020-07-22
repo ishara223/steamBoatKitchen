@@ -82,27 +82,56 @@ if($paymentType == "Card payment"){
       'line1'   => $postdata->customerAdressLineOne,
       'line1'   => $postdata->customerAdressLineTwo,
       'city'    => $postdata->customerAdressCity,
-      'country' =>'LK'
+      'country' =>'CA'
     ), 
   );
 
   $customerResult = $stripe->customers->create($customerDetailsAry);
 
-
-  $response = $stripe->charges->create([
-    'amount'      => $postdata->price*100,
-    'currency'    => 'usd',
-    //'source' => $postdata->token,
-    'customer'    => $customerResult,
-    'description' => $postdata->customerPhone,
-  ]);
-  //$pId = $postdata->cart[0]->product->pId;
-  $chId = $response->id;
-  insertOrderDataToDatabase($postdata,$chId);
+  try{
+    $charge = $stripe->charges->create([
+      'amount'      => $postdata->price*100,
+      'currency'    => 'usd',
+      //'source' => $postdata->token,
+      'customer'    => $customerResult,
+      'description' => $postdata->customerPhone,
+    ]);
+    //$pId = $postdata->cart[0]->product->pId;
+    $chId = $charge->id;
+    insertOrderDataToDatabase($postdata,$chId);
+    $response = array(
+        "status" => "success",
+        "error" => false,
+        "message" => "Order Add Successfully",
+        //"url" => $server_url."/".$upload_name
+    );
+  }catch(\Stripe\Error\Base $e){
+    $response = array(
+      "status" => "error",
+      "error" => true,
+      "message" => $e->getMessage()+"Try Agian"
+    );
+  }catch (Exception $e) {
+    // Catch any other non-Stripe exceptions
+    $response = array(
+      "status" => "error",
+      "error" => true,
+      "message" => $e->getMessage()+"Try Agian"
+    );
+  }
 }
+
+
+
 else if($paymentType == "Pay at store") {
   $chId = null;
   insertOrderDataToDatabase($postdata,$chId);
+  $response = array(
+    "status" => "success",
+    "error" => false,
+    "message" => "Order Add Successfully",
+    //"url" => $server_url."/".$upload_name
+  );
 } 
 
   
@@ -152,6 +181,6 @@ function insertOrderDataToDatabase($postdata,$chId){
     $true = mysqli_stmt_execute($st);
   }
 }
- 
-echo json_encode($postdata->date);
+mysqli_close($connection); 
+echo json_encode($response);
     //echo json_encode($customerResult);

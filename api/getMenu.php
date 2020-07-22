@@ -22,11 +22,11 @@ if($result = mysqli_query($connection,$sql)){
     $i++;
   }
   echo json_encode($menu);
-}
+}  
 else{
   //http_response_code(404);
   echo json_encode($connection);
 }
 
-
+mysqli_close($connection);
 ?>

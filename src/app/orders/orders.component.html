@@ -14,9 +14,10 @@
         <div  class="col-md-12" >
             <mat-card *ngFor="let getorderDetails of getorderDetails" style="margin-bottom: 10px;">
                 <mat-card-header class="row">
-                    <div class="columnTwo">
+                    <div class="columnTwo" style="padding: 11px;background-color: azure; border-radius: .5rem;">
                        <mat-card-title>$.{{getorderDetails.price}}</mat-card-title>
-                        <mat-card-subtitle>{{getorderDetails.date}}</mat-card-subtitle> 
+                        <!-- <mat-card-subtitle>{{getorderDetails.date}}</mat-card-subtitle>  -->
+                        <mat-card-subtitle>{{getorderDetails.date| date:'short':'+0130'}}</mat-card-subtitle> 
                     </div>
                     <div class="columnOne">
                         <h3 ><strong>Order ID :</strong>{{getorderDetails.orId}}</h3>

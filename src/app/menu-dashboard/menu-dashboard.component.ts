@@ -20,6 +20,8 @@ export class MenuDashboardComponent implements OnInit {
   //PHP_API_SERVER = "http://steamboatkitchen.com/demo";
   PHP_API_SERVER = this.apiService.PHP_API_SERVER;
 
+  menuId:any;
+  edit:boolean;
   add:boolean;
   view:boolean;
   title:string;
@@ -85,22 +87,44 @@ export class MenuDashboardComponent implements OnInit {
   }
 
   onSubmit() {
-    const formData = new FormData();
-    formData.append('avatar', this.form.get('avatar').value);
-    formData.append('menuName', this.form.get('menuName').value);
-    formData.append('menuDiscription', this.form.get('menuDiscription').value);
-    console.log(formData);
-    this.apiService.createMennu(formData).subscribe(
-      (res) => {
-        this.uploadResponse = res;
-          console.log(res);
-        this.getMenu();
-        this.form = null;
-      },
-      (err) => {  
-        console.log(err);
-      }
-    );
+    if(!this.edit){
+      const formData = new FormData();
+      formData.append('avatar', this.form.get('avatar').value);
+      formData.append('menuName', this.form.get('menuName').value);
+      formData.append('menuDiscription', this.form.get('menuDiscription').value);
+      console.log(formData);
+      this.apiService.createMennu(formData).subscribe(
+        (res) => {
+          this.uploadResponse = res;
+            console.log(res);
+          this.getMenu();
+          this.form = null;
+        },
+        (err) => {  
+          console.log(err);
+        }
+      );
+    }
+    else{
+      const formData = new FormData();
+      formData.append('avatar', this.form.get('avatar').value);
+      formData.append('menuName', this.form.get('menuName').value);
+      formData.append('menuDiscription', this.form.get('menuDiscription').value);
+      formData.append('mId', this.menuId);
+      console.log(formData);
+      this.apiService.editMenu(formData).subscribe(
+        (res) => {
+          this.uploadResponse = res;
+            console.log(res);
+          this.getMenu();
+          this.form = null;
+        },
+        (err) => {  
+          console.log(err);
+        }
+      );
+    }
+    
   }
 
   deleteMenu(menuId){
@@ -108,6 +132,22 @@ export class MenuDashboardComponent implements OnInit {
       console.log("Menu deleted, ", mennu);
       this.getMenu();
     });
+  }
+
+  editProductView(menu){
+    this.edit = true;
+    this.add = true;
+    this.view = false;
+    this.title = "Edit Menu";
+    this.buttonText = "View Menu";
+
+    this.form.controls['menuName'].setValue(menu.mName);
+    this.form.controls['menuDiscription'].setValue(menu.mDiscription);
+    //this.form.controls['productPrice'].setValue(menu.price);
+    //this.form.controls['productMenu'].setValue(this.menu.mName);
+
+    this.menuId = menu.mId;
+
   }
 
 

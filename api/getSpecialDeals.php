@@ -29,5 +29,5 @@ else
   echo json_encode($specialDeals);
 }
 
-
+mysqli_close($connection);
 ?>

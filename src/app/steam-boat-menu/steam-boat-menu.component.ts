@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from  'rxjs';
 import { CommonModule } from '@angular/common';
 import {DataService}from '../data.service';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 
 @Component({
@@ -16,7 +17,7 @@ import {DataService}from '../data.service';
 
 export class SteamBoatMenuComponent implements OnInit {
   //PHP_API_SERVER = "http://localhost:8081";
-  PHP_API_SERVER = "http://steamboatkitchen.com/demo";
+  PHP_API_SERVER = this.apiService.PHP_API_SERVER;
   menuId:number;
   mennu:mennu[];
   mennuItems: mennu = {
@@ -46,16 +47,16 @@ export class SteamBoatMenuComponent implements OnInit {
     status          :null,
   };
   cart:any = [];
+  progress: number = 0;
 
- 
- 
+
   //menuItem:this.menuItem;
-  constructor(private apiService: ApiServiceService,private httpClient: HttpClient,private dataService: DataService) { 
-    
+  constructor(private apiService: ApiServiceService,private httpClient: HttpClient,private dataService: DataService) {
+
   }
 
   ngOnInit(): void {
-    
+
     //this.getProducts(5);
     //this.mennu = undefined;
     this.getMenu();
@@ -63,7 +64,7 @@ export class SteamBoatMenuComponent implements OnInit {
 
     console.log(this.mennu);
   }
-  
+
   readproductss(id: number): Observable<products[]>{
     return this.httpClient.post<products[]>(`${this.PHP_API_SERVER}/api/getProducts.php`,id);
   }
@@ -75,7 +76,7 @@ export class SteamBoatMenuComponent implements OnInit {
       //return this.mennu;
       this.getProducts(this.mennu[0].mId);
     })
-    
+
   }
 
   getProducts(id:number): void {
@@ -87,9 +88,41 @@ export class SteamBoatMenuComponent implements OnInit {
     })
     this.readOneMenuItem(id);
   }
+  // getProducts(id:number): void {
+  //   this.menuId=id;
+  //   this.readproductss(id).subscribe(
+
+  //     (event: HttpEvent<any>)=>{
+  //       console.log('Request has been made!');
+  //     switch (event.type) {
+  //       case HttpEventType.Sent:
+  //         console.log('Request has been made!');
+  //         break;
+  //       case HttpEventType.ResponseHeader:
+  //         console.log('Response header has been received!');
+  //         break;
+  //       case HttpEventType.UploadProgress:
+  //         this.progress = Math.round(event.loaded / event.total * 100);
+  //         console.log(`Uploaded! ${this.progress}%`);
+  //         break;
+  //       case HttpEventType.Response:
+  //         console.log('User successfully created!', event.body);
+  //         setTimeout(() => {
+  //           this.progress = 0;
+  //         }, 1500);
+  //     }
+
+  //     //this.show = true;
+  //     },(productItems: products[])=>{
+  //       this.products = productItems;
+  //       console.log(productItems);
+  //     },
+  //   )
+  //   this.readOneMenuItem(id);
+  // }
 
   readMenuItem(id: number): Observable<oneMennuItem[]>{
-    
+
     return this.httpClient.post<oneMennuItem[]>(`${this.PHP_API_SERVER}/api/readOneMenuItem.php`,id);
   }
 
@@ -103,7 +136,27 @@ export class SteamBoatMenuComponent implements OnInit {
   }
 
   itemAddToCart(product):void{
-    this.dataService.itemAddToCart(product);
-    console.log(this.dataService.cart.length);
+    let item1 = this.dataService.cart.find(i => i.product.pId === product.pId);
+    console.log(item1);
+    if(item1 == undefined){
+      this.dataService.itemAddToCart(product);
+      console.log(this.dataService.cart.length);
+    }
+    else{
+      let index = this.dataService.cart.indexOf(item1);
+      console.log(index);
+      // console.log(this.apiService.cart[index]);
+      // this.apiService.cart[index].quentity = item1.quentity + 1;
+      // console.log(this.apiService.cart[index]);
+      const item = this.dataService.cart.filter(i => i.product.pId === product.pId)[0];
+      if(item){
+        console.log(item);
+        item.quentity = item.quentity + 1;
+        console.log(item);
+        console.log(this.dataService.cart);
+      }
+    }
+
+
   }
 }

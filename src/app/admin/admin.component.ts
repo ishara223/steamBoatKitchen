@@ -15,6 +15,7 @@ export class AdminComponent implements OnInit {
   product:boolean;
   carousl:boolean;
   orders:boolean;
+  massage:boolean;
   //fillerNav = Array.from({length: 50}, (_, i) => `Nav Item ${i + 1}`);
 
   // fillerContent = Array.from({length: 50}, () =>
@@ -51,25 +52,37 @@ export class AdminComponent implements OnInit {
     this.menu = true;
     this.product = false;
     this.carousl = false;
+    this.massage = false;
   }
   producrDashboardView():void {
     this.orders = false;
     this.menu = false;
     this.product = true;
     this.carousl = false;
+    this.massage = false;
   }
   carouslDashboardView():void {
     this.orders = false;
     this.menu = false;
     this.product = false;
     this.carousl = true;
+    this.massage = false;
   }
   ordersDashboardView():void {
     this.orders = true;
     this.menu = false;
     this.product = false;
     this.carousl = false;
+    this.massage = false;
   }
+  massageDashboardView():void {
+    this.orders = false;
+    this.menu = false;
+    this.product = false;
+    this.carousl = false;
+    this.massage = true;
+  }
+
 
   logout(){
     this.apiService.deleteToken();

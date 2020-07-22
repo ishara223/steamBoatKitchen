@@ -24,5 +24,5 @@ echo json_encode($authdata);
 }
 }
 
-
+mysqli_close($connection);
 ?>

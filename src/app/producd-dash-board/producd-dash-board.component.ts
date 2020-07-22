@@ -14,6 +14,8 @@ export class ProducdDashBoardComponent implements OnInit {
 
   PHP_API_SERVER = this.apiService.PHP_API_SERVER;
 
+  productId:any;
+  edit:boolean;
   add:boolean;
   view:boolean;
   title:string;
@@ -21,6 +23,7 @@ export class ProducdDashBoardComponent implements OnInit {
   menuId:number;
   form: FormGroup;
   uploadResponse;
+
   mennu:mennu[];
   mennuItems: mennu = {
     mId             :null,
@@ -42,7 +45,7 @@ export class ProducdDashBoardComponent implements OnInit {
   constructor(private apiService: ApiServiceService,private httpClient: HttpClient,private fromBuilder:FormBuilder) { }
 
   ngOnInit(): void {
-
+    this.edit = false;
     this.add = false;
     this.view = true;
     this.title = "View Product";
@@ -76,22 +79,42 @@ export class ProducdDashBoardComponent implements OnInit {
   }
 
   onSubmit() {
-    const formData = new FormData();
-    formData.append('avatar', this.form.get('avatar').value);
-    formData.append('productName', this.form.get('productName').value);
-    formData.append('productDiscription', this.form.get('productDiscription').value);
-    formData.append('productMenu', this.form.get('productMenu').value);
-    formData.append('productPrice', this.form.get('productPrice').value);
-    console.log(this.form);
-    this.apiService.addProduct(formData).subscribe(
-      (res) => {
-        this.uploadResponse = res;
-          console.log(res);
-      },
-      (err) => {  
-        console.log(err);
-      }
-    );
+    if(!this.edit){
+      const formData = new FormData();
+      formData.append('avatar', this.form.get('avatar').value);
+      formData.append('productName', this.form.get('productName').value);
+      formData.append('productDiscription', this.form.get('productDiscription').value);
+      formData.append('productMenu', this.form.get('productMenu').value);
+      formData.append('productPrice', this.form.get('productPrice').value);
+      console.log(this.form);
+      this.apiService.addProduct(formData).subscribe(
+        (res) => {
+          this.uploadResponse = res;
+            console.log(res);
+        },
+        (err) => {  
+          console.log(err);
+        }
+      );
+    }
+    else{
+      const formData = new FormData();
+      formData.append('avatar', this.form.get('avatar').value);
+      formData.append('productName', this.form.get('productName').value);
+      formData.append('productDiscription', this.form.get('productDiscription').value);
+      formData.append('productPrice', this.form.get('productPrice').value);
+      formData.append('pId',this.productId);
+      console.log(this.form);
+      this.apiService.editProduct(formData).subscribe(
+        (res) => {
+          this.uploadResponse = res;
+            console.log(res);
+        },
+        (err) => {  
+          console.log(err);
+        }
+      );
+    }
   }
 
   getProducts(id:number): void {
@@ -125,6 +148,22 @@ export class ProducdDashBoardComponent implements OnInit {
       console.log("Product deleted, ", products);
       this.getProducts(this.menuId);
     });
+  }
+
+  editProductView(product){
+    this.edit = true;
+    this.add = true;
+    this.view = false;
+    this.title = "Edit Product";
+    this.buttonText = "View Product";
+
+    this.form.controls['productName'].setValue(product.pName);
+    this.form.controls['productDiscription'].setValue(product.discription);
+    this.form.controls['productPrice'].setValue(product.price);
+    this.form.controls['productMenu'].setValue(this.mennuItems.mName);
+
+    this.productId = product.pId;
+
   }
 
 }

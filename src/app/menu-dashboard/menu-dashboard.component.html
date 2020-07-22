@@ -64,7 +64,10 @@
                         <td>{{mennu.mDiscription}}</td>
                         <td><img src="{{PHP_API_SERVER}}/api/{{mennu.mImg}}" style="width: 100px;height: auto;"></td>
                         <td>{{mennu.status}}</td>
-                        <td><button class="btn btn-danger" (click) = "deleteMenu(mennu.mId)">Delete</button></td>
+                        <td>
+                            <button class="btn btn-danger" (click) = "deleteMenu(mennu.mId)">Delete</button>
+                            <button class="btn btn-primary" (click) = "editProductView(mennu)">edit</button>
+                        </td>
                       </tr>
                     </tbody>
                   </table>

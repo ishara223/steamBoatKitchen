@@ -26,5 +26,5 @@ else
   return http_response_code(422);
 }
 echo json_encode($postdata);
-
+mysqli_close($connection);
 ?>

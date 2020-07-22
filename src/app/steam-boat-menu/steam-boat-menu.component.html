@@ -1,6 +1,14 @@
 <div class="container">
-    <div class="row" style="padding-top: 50px; padding-bottom: 50px;">
-        <button *ngFor="let mennu of mennu"  class="btn btn-success" style="margin: 5px;" (click)="getProducts(mennu.mId)">
+    <div class="row ">
+      <div class="col-md-12 customFlexContainer">
+        <h1 class="berkshire">Steam Boat Kitchen</h1><br>
+      </div>
+      <div class="col-md-12 customFlexContainer">
+        <p class="berkshire">We constantly create new tastes to always amaze you</p>
+      </div>
+    </div>
+    <div class="row customFlexContainer" style="padding-top: 50px; padding-bottom: 50px;">
+        <button *ngFor="let mennu of mennu"  class="btn btn-success" style="margin: 5px;background-color: #5fb709;" (click)="getProducts(mennu.mId)">
             {{mennu.mName}}
         </button>
     </div>
@@ -17,16 +25,16 @@
         <div class="col-md-6" style="height: auto;padding:5px;max-height: 300px;overflow: hidden;border-radius: .5rem;">
             <img src="{{PHP_API_SERVER}}/api/{{oneMennuItem[0].mImg}}" alt="{{oneMennuItem[0].mName}}" style="border-radius: .5rem;width: 100%;" >
         </div>
-        <div class="col-md-6 my-auto" style="padding: 5px;text-align: center;">       
+        <div class="col-md-6 my-auto" style="padding: 5px;text-align: center;">
             <h1><strong>{{oneMennuItem[0].mName}}</strong></h1>
             <p>{{oneMennuItem[0].mDiscription}}</p>
         </div>
     </div>
-    <div class="row" style="margin-bottom:50px">
+    <div class="row customFlexContainer" style="margin-bottom:50px">
         <div *ngFor="let products of products" class="col-md-3 col-xsm-6" style="padding: 5px;margin-left: 0px!important;" >
             <div class="row" style="width: 100%;margin-left: 0px!important;border:1px solid green;height: auto;border-radius: .5rem;padding:5px;height: 100%;">
                 <div class="" style="width: 100%;overflow: hidden; height:auto;">
-                    <img class="hoverZoom" src="{{PHP_API_SERVER}}/api/{{products.pImg}}" alt="{{products.pName}}" style="width:100%;height:auto;border-radius: .5rem;"> 
+                    <img class="hoverZoom" src="{{PHP_API_SERVER}}/api/{{products.pImg}}" alt="{{products.pName}}" style="width:100%;height:auto;border-radius: .5rem;">
                 </div>
                 <div class="column" style="width: 70%; ">
                     <h3><strong>{{products.pName}}</strong></h3>

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap'; 
+import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ApiServiceService } from '../api-service.service';
 import { carousl } from  '../objects';
 import { trigger, transition, style, animate } from "@angular/animations";
+//import { OwlModule } from 'ngx-owl-carousel';
 
 @Component({
   selector: 'app-carousl',
@@ -19,6 +20,7 @@ import { trigger, transition, style, animate } from "@angular/animations";
       ])
     ])
   ]
+
 })
 
 export class CarouslComponent implements OnInit {
@@ -30,11 +32,14 @@ export class CarouslComponent implements OnInit {
     CImg        :null,
   };
 
-  constructor(private apiService: ApiServiceService,config: NgbCarouselConfig) {  
-    config.interval = 4000;  
-    config.wrap = true;  
-    config.keyboard = false;  
-    config.pauseOnHover = false;  
+  // mySlideOptions={items: 1, dots: true, nav: true};
+  // myCarouselOptions={items: 3, dots: true, nav: true};
+
+  constructor(private apiService: ApiServiceService,config: NgbCarouselConfig) {
+    config.interval = 4000;
+    config.wrap = true;
+    config.keyboard = false;
+    config.pauseOnHover = false;
   }
   ngOnInit(): void {
     this.apiService.readCarousl().subscribe((selectedItem: carousl[])=>{

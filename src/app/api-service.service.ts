@@ -1,6 +1,6 @@
 import { Injectable, Output, EventEmitter  } from '@angular/core';
 import { HttpClient,HttpEvent, HttpErrorResponse, HttpEventType } from '@angular/common/http';
-import { carousl,contactUsForm,mennu,Policy,specialDeals,products,getItemrequest,orderDetails,getOrderDetails,editOrder } from  './objects';
+import { carousl,contactUsForm,mennu,Policy,specialDeals,products,getItemrequest,orderDetails,getOrderDetails,editOrder,userMassage } from  './objects';
 import { oneItem } from  './objects';
 import { Observable } from  'rxjs';
 import { map } from  'rxjs/operators';
@@ -31,7 +31,7 @@ export class ApiServiceService {
   // getItemrequest:getItemrequest;
   // //getItemrequests= this.getItemrequest;
   // readoneItem(request: getItemrequest): Observable<oneItem[]>{
-    
+
   //   return this.httpClient.post<oneItem[]>(`${this.PHP_API_SERVER}/api/getItem.php`,request);
   // }
   postMedicine(contactUsForm: contactUsForm) {
@@ -39,7 +39,7 @@ export class ApiServiceService {
     return this.httpClient.post(`${this.PHP_API_SERVER}/api/contactUsFormSubmit.php`, contactUsForm);
   }
   // readproducts(id: number): Observable<products[]>{
-    
+
   //   return this.httpClient.post<products[]>(`${this.PHP_API_SERVER}/api/getItem.php`,id);
   // }
   createPolicy(policy: Policy): Observable<Policy>{
@@ -47,7 +47,6 @@ export class ApiServiceService {
   }
 
   readspecialDeals(): Observable<specialDeals[]>{
-  
     return this.httpClient.get<specialDeals[]>(`${this.PHP_API_SERVER}/api/getSpecialDeals.php`);
   }
 
@@ -69,6 +68,9 @@ export class ApiServiceService {
   readproductss(mId: number): Observable<products[]>{
     return this.httpClient.post<products[]>(`${this.PHP_API_SERVER}/api/getProducts.php`,mId);
   }
+  // readproductss(mId: number): Observable<any>{
+  //   return this.httpClient.post<products[]>(`${this.PHP_API_SERVER}/api/getProducts.php`,mId,{reportProgress:true,observe: 'events'});
+  // }
 
   // deleteMenu(menuId: number){
   //   return this.httpClient.delete<mennu>(`${this.PHP_API_SERVER}/api/deleteMenu.php/?menuId=${menuId}`);
@@ -76,7 +78,7 @@ export class ApiServiceService {
   deleteMenu(menuId: number){
     return this.httpClient.post<mennu>(`${this.PHP_API_SERVER}/api/deleteMenu.php`,menuId);
   }
-  
+
   public userlogin(username, password) {
     alert(username)
     return this.httpClient.post<any>(this.PHP_API_SERVER + '/api/login.php', { username, password })
@@ -133,7 +135,22 @@ export class ApiServiceService {
   deleteProduct(productId: number){
     return this.httpClient.post<any>(`${this.PHP_API_SERVER}/api/deleteProduct.php`,productId);
   }
+
   deleteCarousl(carouslId: number){
     return this.httpClient.post<any>(`${this.PHP_API_SERVER}/api/deleteCarousl.php`,carouslId);
+  }
+
+  public editProduct(productData) {
+    let uploadURL = `${this.PHP_API_SERVER}/api/editProduct.php`;
+    return this.httpClient.post<any>(uploadURL, productData);
+  }
+
+  public editMenu(menuData) {
+    let uploadURL = `${this.PHP_API_SERVER}/api/editMenu.php`;
+    return this.httpClient.post<any>(uploadURL, menuData);
+  }
+
+  readUserMassages(): Observable<userMassage[]>{
+    return this.httpClient.get<userMassage[]>(`${this.PHP_API_SERVER}/api/readUserMAssage.php`);
   }
 }

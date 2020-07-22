@@ -27,5 +27,5 @@ else
   return http_response_code(422);
 }
 //echo json_encode ($response)
-
+mysqli_close($connection);
 ?>

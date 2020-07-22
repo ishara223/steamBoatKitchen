@@ -39,3 +39,4 @@ function insertOrderDataToDatabase($action,$orderId){
     return $response;               
 }
 echo json_encode($response);
+mysqli_close($connection);

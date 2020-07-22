@@ -128,3 +128,11 @@ export class editOrder {
     orderId:number;
     action:string;
 }
+
+export class userMassage {
+    cuId:number;
+    name:string;
+    email:string;
+    Contactnumber:number;
+    massage:string;
+}

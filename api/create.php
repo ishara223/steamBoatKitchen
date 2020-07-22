@@ -105,6 +105,6 @@ if($_FILES['avatar'])
         "message" => "No file was sent!"
     );
 }
-
+mysqli_close($connection);
 echo json_encode($response);
 //echo json_encode($random_name);

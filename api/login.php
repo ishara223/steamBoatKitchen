@@ -28,5 +28,5 @@ if(isset($postdata) && !empty($postdata)){
   }
 }
 
-
+mysqli_close($connection);
 ?>

@@ -34,6 +34,7 @@ if (mysqli_query($connection, $sql)) {
 } else {
   echo "Error: " . $sql . "<br>" . mysqli_error($connection);
 }
+mysqli_close($connection);
 //echo json_encode($contactUsForm);
 //echo ('$contactUsForm');
 ?>

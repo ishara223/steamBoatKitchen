@@ -73,7 +73,7 @@
     http_response_code(404);
     //echo json_encode($connection);
     }
-
+    mysqli_close($connection);
   
     //echo json_encode($id);
 ?>
