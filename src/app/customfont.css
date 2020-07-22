@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'berkshireswashh';
+    src: url("/assets/font/berkshireswash-regular.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url("/assets/font/Quicksand-Bold.otf") format("truetype");
+}
