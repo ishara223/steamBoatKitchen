@@ -1,0 +1,31 @@
+
+<div class="container">
+   <div class="row" style="padding-top: 10px;">
+        <div  class="col-md-12" >
+            <div class="text-center" style="width: 100%;height: auto;">
+               <h2>Massages</h2> 
+            </div>
+            <mat-card *ngFor="let userMassage of userMassage" style="margin-bottom: 10px;">
+                <mat-card-header class="row">
+                    <div class="columnTwo" style="padding: 11px;background-color: azure; border-radius: .5rem;">
+                    <mat-card-title>{{userMassage.name}}</mat-card-title>
+                    </div>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>{{userMassage.eMail}}</p>
+                                <p>{{userMassage.contactNumber}}</p>
+                                <h2>{{userMassage.massage}}</h2> 
+                            </div>
+                        </div>
+                    </div>    
+                </mat-card-content> 
+                <mat-card-actions >
+                
+                </mat-card-actions>    
+            </mat-card>
+        </div>
+    </div> 
+</div>
